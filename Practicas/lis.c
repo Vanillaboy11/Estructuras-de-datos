@@ -16,7 +16,6 @@ Node *createNode(int matri, const char *ln_f, const char *ln_m, const char *name
   if (newNode == NULL)
   {
     printf("Error: No se pudo asignar memoria para el nuevo nodo.\n");
-    exit(EXIT_FAILURE);
   }
   newNode->matri = matri;
   strcpy(newNode->ln_f, ln_f);
