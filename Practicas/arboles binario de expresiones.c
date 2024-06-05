@@ -1,5 +1,5 @@
-//Author: Isaac Varela
-// Creacion y evaluacion de arboles binarios de expresiones
+// Author: Isaac Varela
+//  Creacion y evaluacion de arboles binarios de expresiones
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -71,4 +71,3 @@ void evaluateExpression(char *expresion)
 {
   expresion = "5 * 6 - 4 + 8 * (3 ^ (4 - 2)) * sqrt(3)";
 }
-

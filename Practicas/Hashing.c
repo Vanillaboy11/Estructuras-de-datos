@@ -3,25 +3,31 @@
 #include <string.h>
 
 // Estructura para un elemento de la tabla hash
-typedef struct Elemento {
+typedef struct Elemento
+{
     int clave;
     char *valor;
     struct Elemento *siguiente;
 } Elemento;
 
 // Estructura para la tabla hash
-typedef struct TablaHash {
+typedef struct TablaHash
+{
     int tamano;
     Elemento **tabla;
 } TablaHash;
 
 // Función de hashing simple
-int funcion_hash(int clave, int tamano) {
-    return clave % tamano;
+int funcionHash(int clave)
+{
+    // Tamaño de la tabla hash, preferiblemente un número primo
+    const int tamanoTabla = 101;
+    return clave % tamanoTabla;
 }
 
 // Función para crear una nueva tabla hash
-TablaHash *crear_tabla(int tamano) {
+TablaHash *crear_tabla(int tamano)
+{
     TablaHash *tabla = (TablaHash *)malloc(sizeof(TablaHash));
     tabla->tamano = tamano;
     tabla->tabla = (Elemento **)calloc(tamano, sizeof(Elemento *));
@@ -29,7 +35,8 @@ TablaHash *crear_tabla(int tamano) {
 }
 
 // Función para insertar un elemento en la tabla hash
-void insertar_elemento(TablaHash *tabla, int clave, char *valor) {
+void insertar_elemento(TablaHash *tabla, int clave, char *valor)
+{
     int indice = funcion_hash(clave, tabla->tamano);
 
     Elemento *nuevo_elemento = (Elemento *)malloc(sizeof(Elemento));
@@ -40,11 +47,14 @@ void insertar_elemento(TablaHash *tabla, int clave, char *valor) {
 }
 
 // Función para buscar un elemento en la tabla hash
-char *buscar_elemento(TablaHash *tabla, int clave) {
+char *buscar_elemento(TablaHash *tabla, int clave)
+{
     int indice = funcion_hash(clave, tabla->tamano);
     Elemento *actual = tabla->tabla[indice];
-    while (actual != NULL) {
-        if (actual->clave == clave) {
+    while (actual != NULL)
+    {
+        if (actual->clave == clave)
+        {
             return actual->valor;
         }
         actual = actual->siguiente;
@@ -53,15 +63,21 @@ char *buscar_elemento(TablaHash *tabla, int clave) {
 }
 
 // Función para eliminar un elemento de la tabla hash
-void eliminar_elemento(TablaHash *tabla, int clave) {
+void eliminar_elemento(TablaHash *tabla, int clave)
+{
     int indice = funcion_hash(clave, tabla->tamano);
     Elemento *actual = tabla->tabla[indice];
     Elemento *anterior = NULL;
-    while (actual != NULL) {
-        if (actual->clave == clave) {
-            if (anterior == NULL) {
+    while (actual != NULL)
+    {
+        if (actual->clave == clave)
+        {
+            if (anterior == NULL)
+            {
                 tabla->tabla[indice] = actual->siguiente;
-            } else {
+            }
+            else
+            {
                 anterior->siguiente = actual->siguiente;
             }
             free(actual->valor);
@@ -74,10 +90,13 @@ void eliminar_elemento(TablaHash *tabla, int clave) {
 }
 
 // Función para liberar la memoria de la tabla hash
-void liberar_tabla(TablaHash *tabla) {
-    for (int i = 0; i < tabla->tamano; i++) {
+void liberar_tabla(TablaHash *tabla)
+{
+    for (int i = 0; i < tabla->tamano; i++)
+    {
         Elemento *actual = tabla->tabla[i];
-        while (actual != NULL) {
+        while (actual != NULL)
+        {
             Elemento *siguiente = actual->siguiente;
             free(actual->valor);
             free(actual);
@@ -89,12 +108,14 @@ void liberar_tabla(TablaHash *tabla) {
 }
 
 // Función principal para probar el código
-int main() {
+int main()
+{
     TablaHash *tabla = crear_tabla(10);
     int opcion, clave;
     char valor[100];
 
-    while (1) {
+    while (1)
+    {
         printf("\nMenu:\n");
         printf("1. Insertar un nuevo elemento\n");
         printf("2. Buscar un elemento\n");
@@ -103,36 +124,40 @@ int main() {
         printf("Ingrese el numero de la accion que desea realizar: ");
         scanf("%d", &opcion);
 
-        switch (opcion) {
-            case 1:
-                printf("Ingrese la clave del elemento: ");
-                scanf("%d", &clave);
-                printf("Ingrese el valor del elemento: ");
-                scanf("%s", valor);
-                insertar_elemento(tabla, clave, valor);
-                break;
-            case 2:
-                printf("Ingrese la clave del elemento a buscar: ");
-                scanf("%d", &clave);
-                char *resultado = buscar_elemento(tabla, clave);
-                if (resultado != NULL) {
-                    printf("Valor encontrado: %s\n", resultado);
-                } else {
-                    printf("La clave no existe en la tabla.\n");
-                }
-                break;
-            case 3:
-                printf("Ingrese la clave del elemento a eliminar: ");
-                scanf("%d", &clave);
-                eliminar_elemento(tabla, clave);
-                break;
-            case 4:
-                liberar_tabla(tabla);
-                printf("Saliendo del programa...\n");
-                exit(0);
-            default:
-                printf("Opcion no valida. Por favor, ingrese un numero del 1 al 4.\n");
-                break;
+        switch (opcion)
+        {
+        case 1:
+            printf("Ingrese la clave del elemento: ");
+            scanf("%d", &clave);
+            printf("Ingrese el valor del elemento: ");
+            scanf("%s", valor);
+            insertar_elemento(tabla, clave, valor);
+            break;
+        case 2:
+            printf("Ingrese la clave del elemento a buscar: ");
+            scanf("%d", &clave);
+            char *resultado = buscar_elemento(tabla, clave);
+            if (resultado != NULL)
+            {
+                printf("Valor encontrado: %s\n", resultado);
+            }
+            else
+            {
+                printf("La clave no existe en la tabla.\n");
+            }
+            break;
+        case 3:
+            printf("Ingrese la clave del elemento a eliminar: ");
+            scanf("%d", &clave);
+            eliminar_elemento(tabla, clave);
+            break;
+        case 4:
+            liberar_tabla(tabla);
+            printf("Saliendo del programa...\n");
+            exit(0);
+        default:
+            printf("Opcion no valida. Por favor, ingrese un numero del 1 al 4.\n");
+            break;
         }
     }
 

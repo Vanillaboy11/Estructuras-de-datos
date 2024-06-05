@@ -30,7 +30,7 @@ void initializeStack(struct Stack *stack)
 {
     stack->top = NULL;
     stack->size = 0;
-}   
+}
 
 // Función para verificar si la pila está vacía
 int isEmpty(struct Stack *stack)
@@ -81,19 +81,23 @@ int count(struct Stack *stack)
 }
 
 // Función para liberar la memoria de la pila
-void liberarPila(struct Stack *stack) {
-    while (stack->top != NULL) {
+void liberarPila(struct Stack *stack)
+{
+    while (stack->top != NULL)
+    {
         pop(stack);
     }
 }
 
 // Menu interactivo
-void menu() {
+void menu()
+{
     struct Stack stack;
     int capacidad = 10; // Capacidad por defecto
     initializeStack(&stack);
 
-    while (1) {
+    while (1)
+    {
         printf("\nMenu de opciones:\n");
         printf("1. Crear Pila\n");
         printf("2. Apilar (Push)\n");
@@ -107,97 +111,124 @@ void menu() {
         int opcion;
         scanf("%d", &opcion);
 
-        switch (opcion) {
-            case 1:
-                if (stack.top != NULL) {
-                    liberarPila(&stack);
-                }
-                printf("Ingrese la capacidad de la pila: ");
-                scanf("%d", &capacidad);
-                printf("Pila creada con capacidad %d.\n", capacidad);
-                break;
+        switch (opcion)
+        {
+        case 1:
+            if (stack.top != NULL)
+            {
+                liberarPila(&stack);
+            }
+            printf("Ingrese la capacidad de la pila: ");
+            scanf("%d", &capacidad);
+            printf("Pila creada con capacidad %d.\n", capacidad);
+            break;
 
-            case 2:
-                if (stack.top == NULL) {
-                    printf("Primero debe crear una pila.\n");
-                } else {
-                    int item;
-                    printf("Ingrese el valor a apilar: ");
-                    scanf("%d", &item);
-                    push(&stack, item);
-                }
-                break;
+        case 2:
+            if (stack.top == NULL)
+            {
+                printf("Primero debe crear una pila.\n");
+            }
+            else
+            {
+                int item;
+                printf("Ingrese el valor a apilar: ");
+                scanf("%d", &item);
+                push(&stack, item);
+            }
+            break;
 
-            case 3:
-                if (stack.top == NULL) {
-                    printf("Primero debe crear una pila.\n");
-                } else {
-                    int item = pop(&stack);
-                    if (item != -1) {
-                        printf("Valor %d desapilado.\n", item);
-                    }
+        case 3:
+            if (stack.top == NULL)
+            {
+                printf("Primero debe crear una pila.\n");
+            }
+            else
+            {
+                int item = pop(&stack);
+                if (item != -1)
+                {
+                    printf("Valor %d desapilado.\n", item);
                 }
-                break;
+            }
+            break;
 
-            case 4:
-                if (stack.top == NULL) {
-                    printf("Primero debe crear una pila.\n");
-                } else {
-                    if (isEmpty(&stack)) {
-                        printf("La pila está vacía.\n");
-                    } else {
-                        printf("La pila no está vacía.\n");
-                    }
+        case 4:
+            if (stack.top == NULL)
+            {
+                printf("Primero debe crear una pila.\n");
+            }
+            else
+            {
+                if (isEmpty(&stack))
+                {
+                    printf("La pila está vacía.\n");
                 }
-                break;
-
-            case 5:
-                if (stack.top == NULL) {
-                    printf("Primero debe crear una pila.\n");
-                } else {
-                    liberarPila(&stack);
-                    printf("Pila vaciada.\n");
+                else
+                {
+                    printf("La pila no está vacía.\n");
                 }
-                break;
+            }
+            break;
 
-            case 6:
-                if (stack.top == NULL) {
-                    printf("Primero debe crear una pila.\n");
-                } else {
-                    printf("Tamaño de la pila: %d\n", count(&stack));
+        case 5:
+            if (stack.top == NULL)
+            {
+                printf("Primero debe crear una pila.\n");
+            }
+            else
+            {
+                liberarPila(&stack);
+                printf("Pila vaciada.\n");
+            }
+            break;
+
+        case 6:
+            if (stack.top == NULL)
+            {
+                printf("Primero debe crear una pila.\n");
+            }
+            else
+            {
+                printf("Tamaño de la pila: %d\n", count(&stack));
+            }
+            break;
+
+        case 7:
+            if (stack.top == NULL)
+            {
+                printf("Primero debe crear una pila.\n");
+            }
+            else
+            {
+                printf("Pila: ");
+                struct Node *temp = stack.top;
+                while (temp != NULL)
+                {
+                    printf("%d ", temp->data);
+                    temp = temp->next;
                 }
-                break;
+                printf("\n");
+            }
+            break;
 
-            case 7:
-                if (stack.top == NULL) {
-                    printf("Primero debe crear una pila.\n");
-                } else {
-                    printf("Pila: ");
-                    struct Node *temp = stack.top;
-                    while (temp != NULL) {
-                        printf("%d ", temp->data);
-                        temp = temp->next;
-                    }
-                    printf("\n");
-                }
-                break;
+        case 8:
+            printf("Saliendo...\n");
+            if (stack.top != NULL)
+            {
+                liberarPila(&stack);
+            }
+            return;
 
-            case 8:
-                printf("Saliendo...\n");
-                if (stack.top != NULL) {
-                    liberarPila(&stack);
-                }
-                return;
-
-            default:
-                printf("Opción no válida. Por favor, intente de nuevo.\n");
-                break;
+        default:
+            printf("Opción no válida. Por favor, intente de nuevo.\n");
+            break;
         }
     }
 }
 
 // Función principal
-int main() {
+int main()
+{
     menu();
     return 0;
 }
